@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f5e8d0;
+            padding: 5px;
+            border: 1px solid #000000;
+        }
+
+        td {
+            padding: 5px;
+            border: 1px solid #000000;
+        }
+
+        .button {
+            padding: 5px;
+            background: #f5e8d0;
+            border: 1px solid #000000;
+        }
+    </style>
+</head>
+<body>
+<h2>Users</h2>
+<a href="/add_user">
+    <input type="submit" value="Add new user" class="button">
+</a>
+<br>
+<br>
+<table th:border="1">
+    <tr th:align=center>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>BirthDate</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="user : ${allUsers}" th:align=center>
+        <td th:text="${user.getId()}"/>
+        <td th:text="${user.getFirstName()}"/>
+        <td th:text="${user.getLastName()}"/>
+        <td th:text="${user.getBirthDay()}"/>
+        <td th:align=center>
+            <a th:href="@{/show_single_user(id = ${user.getId()})}">user view</a>
+            <br>
+            <a th:href="@{/edit_user(id=${user.getId()})}">edit user</a>
+            &nbsp / &nbsp
+            <a th:href="@{/delete_user(id=${user.getId()})}">delete user</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
