@@ -1,7 +1,6 @@
 package web.controller;
 
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import web.entity.User;
 import web.service.UserService;
@@ -18,26 +17,31 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String showAllUsers(ModelMap model) {
+    public String mainPage() {
+        return "mainPage";
+    }
+
+    @GetMapping("/users")
+    public String showAllUsers(Model model) {
         model.addAttribute("allUsers", userService.getAllUsers());
         return "allUsers";
     }
 
-    @GetMapping(value = "/show_single_user")
-    public String showSingleUser(@RequestParam(value = "id") Long id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "userByID";
-    }
-
-    @GetMapping(value = "/add_user")
+    @GetMapping("/add_user")
     public String showFormForAddUser(@ModelAttribute("user") User user) {
         return "addNewUserForm";
     }
 
-    @PostMapping()
+    @PostMapping("/add_user")
     public String addUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
-        return "redirect:/";
+        return "redirect:/users";
+    }
+
+    @GetMapping("show_single_user")
+    public String showSingleUser(@RequestParam(value = "id") Long id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
+        return "userByID";
     }
 
     @GetMapping(value = "/edit_user")
@@ -46,15 +50,15 @@ public class UserController {
         return "editUserForm";
     }
 
-    @PostMapping("/save_edit_user")
+    @PostMapping("/edit_user")
     public String update(@ModelAttribute("user") User user) {
         userService.updateUser(user);
-        return "redirect:/";
+        return "redirect:/users";
     }
 
     @GetMapping(value = "/delete_user")
     public String deleteUserById(@RequestParam(name = "id") Long id) {
         userService.removeUserById(id);
-        return "redirect:/";
+        return "redirect:/users";
     }
 }

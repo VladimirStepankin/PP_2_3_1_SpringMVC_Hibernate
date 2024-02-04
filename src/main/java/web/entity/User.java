@@ -11,9 +11,9 @@ import java.util.Objects;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -29,18 +29,18 @@ public class User {
     }
 
     public User(Long id, String firstName, String lastName, Date birthDay) {
-        this.id = id;
+        this.userId = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDay = birthDay;
     }
 
     public Long getId() {
-        return id;
+        return userId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.userId = id;
     }
 
     public String getFirstName() {
@@ -72,20 +72,20 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(firstName,
+        return Objects.equals(userId, user.userId) && Objects.equals(firstName,
                 user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(birthDay,
                 user.birthDay);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, birthDay);
+        return Objects.hash(userId, firstName, lastName, birthDay);
     }
 
     @Override
     public String toString() {
         return "User{" +
-               "id=" + id +
+               "id=" + userId +
                ", firstName='" + firstName + '\'' +
                ", lastName='" + lastName + '\'' +
                ", birthDay=" + birthDay +

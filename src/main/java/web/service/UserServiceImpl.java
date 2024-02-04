@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import web.dao.UserDAO;
 import web.entity.User;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -43,5 +44,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(User user) {
         userDao.updateUser(user);
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Приложение запустилось! Откройте страницу http://localhost:8080/");
     }
 }
